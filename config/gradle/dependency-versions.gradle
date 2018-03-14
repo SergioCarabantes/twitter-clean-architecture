@@ -1,0 +1,23 @@
+ext.versions = [
+
+        //Android
+        compileSdk                  : 27,
+        targetSdk                   : 25,
+        minSdk                      : 18,
+
+        //Libraries
+        supportLibraries            : '27.0.1',
+        constraintLayout            : '1.0.2',
+        dagger                      : '2.11',
+        rxJava                      : '2.0.2',
+        rxAndroid                   : '2.0.1',
+        javaxAnnotations            : '1.0',
+        javaxInject                 : '1',
+        gson                        : '2.8.1',
+        okHttp                      : '3.8.1',
+        androidAnnotations          : '21.0.3',
+        retrofit                    : '2.3.0',
+        timber                      : '4.5.1',
+        okhttp_logging_interceptor  : '3.8.1',
+        glide                       : '4.0.0',
+]

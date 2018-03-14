@@ -15,6 +15,9 @@ buildscript {
     }
 }
 
+apply from: 'config/gradle/dependency-versions.gradle'
+apply from: 'config/gradle/dependencies.gradle'
+
 allprojects {
     repositories {
         google()

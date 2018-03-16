@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.sergio.twitter"
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        encoding 'UTF-8'
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    def applicationDependencies = rootProject.ext.projectDependencies
+
+    compile project(':domain')
+    compile project(':data')
+
+    compileOnly applicationDependencies.javaxAnnotation
+    compileOnly applicationDependencies.javaxInject
+
+    //Application dependencies
+    implementation applicationDependencies.appCompat
+    implementation applicationDependencies.supportLibraryDesign
+    implementation applicationDependencies.recyclerView
+    implementation applicationDependencies.constraintLayout
+    implementation applicationDependencies.androidAnnotations
+    implementation applicationDependencies.dagger
+    implementation applicationDependencies.rxJava
+    implementation applicationDependencies.rxAndroid
+    implementation applicationDependencies.gson
+    implementation applicationDependencies.okhttp
+    implementation applicationDependencies.okhttpLoggingInterceptor
+    implementation applicationDependencies.retrofit
+    implementation applicationDependencies.retrofitGson
+    implementation applicationDependencies.retrofitRxJava2
+    implementation applicationDependencies.glide
+
+}

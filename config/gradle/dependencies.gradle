@@ -1,65 +1,21 @@
 ext.projectDependencies = [
-        // AppCompat support library. Contains the AppCompatActivity among other things.
-        // See https://developer.android.com/topic/libraries/support-library/packages.html for more details.
-        appCompat:                  "com.android.support:appcompat-v7:$versions.supportLibraries",
 
-        // Design support library. Contains material components like FAB, SnackBars etc.
-        // See https://developer.android.com/topic/libraries/support-library/packages.html for more details.
+        appCompat:                  "com.android.support:appcompat-v7:$versions.supportLibraries",
         supportLibraryDesign:       "com.android.support:design:$versions.supportLibraries",
         recyclerView:               "com.android.support:recyclerview-v7:$versions.supportLibraries",
         constraintLayout:           "com.android.support.constraint:constraint-layout:$versions.constraintLayout",
-
-        // Support library annotations. See https://developer.android.com/reference/android/support/annotation/package-summary.html
-        // for the whole list.
         androidAnnotations:         "com.android.support:support-annotations:$versions.supportLibraries",
-
-        // Dagger dependency injection framework.
-        // See https://google.github.io/dagger/ for more details.
         daggerCompiler:             "com.google.dagger:dagger-compiler:$versions.dagger",
         dagger:                     "com.google.dagger:dagger:$versions.dagger",
-
-        // Reactive programming for Java.
-        // See https://github.com/ReactiveX/RxJava for more details.
         rxJava:                     "io.reactivex.rxjava2:rxjava:$versions.rxJava",
-
-        // Provides a hook to the Android UI thread Scheduler, along with some other scheduler util.
-        // See https://github.com/ReactiveX/RxAndroid for more details
         rxAndroid:                  "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid",
-
-        //Adds javax.annotation.Generated. It is used by autoValue.
-        //https://github.com/google/dagger/issues/95
         javaxAnnotation:            "javax.annotation:jsr250-api:$versions.javaxAnnotations",
-
-        // JSR 330 for annotations like @Inject, @Qualifier, @Named, @Scope etc.
-        // See https://github.com/google/guice/wiki/JSR330 for more details.
         javaxInject:                "javax.inject:javax.inject:$versions.javaxInject",
-
-        // Java serialization/deserialization library.
-        // See https://github.com/google/gson for more details.
         gson:                       "com.google.code.gson:gson:$versions.gson",
-
-        // Http client.
-        // See https://github.com/square/okhttp for more details.
         okhttp:                     "com.squareup.okhttp3:okhttp:$versions.okHttp",
-
-        // Intercepts all network calls and logs them.
-        // See https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor for more details.
         okhttpLoggingInterceptor:   "com.squareup.okhttp3:logging-interceptor:$versions.okhttp_logging_interceptor",
-
-        // Networking library.
-        // See https://github.com/square/retrofit for more details
         retrofit:                   "com.squareup.retrofit2:retrofit:$versions.retrofit",
-
-        // Adapter for Gson for retrofit.
-        // See https://github.com/square/retrofit/tree/master/retrofit-converters/gson for more details.
         retrofitGson:               "com.squareup.retrofit2:converter-gson:$versions.retrofit",
-
-        // Adapter for RxJava for retrofit.
-        // See https://github.com/square/retrofit/tree/master/retrofit-adapters/rxjava2 for more details
         retrofitRxJava2:            "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit",
-
-        // Image loading library.
-        // See https://github.com/bumptech/glide for more details.
-        glide:                      "com.github.bumptech.glide:glide:$versions.glide",
-
+        glide:                      "com.github.bumptech.glide:glide:$versions.glide"
 ]

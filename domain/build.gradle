@@ -1,0 +1,10 @@
+apply plugin: 'java-library'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+dependencies {
+    def applicationDependencies = rootProject.ext.projectDependencies
+    implementation applicationDependencies.retrofitRxJava2
+    implementation applicationDependencies.dagger
+}

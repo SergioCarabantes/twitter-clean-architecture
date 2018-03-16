@@ -1,8 +1,41 @@
-apply plugin: 'java-library'
+apply plugin: 'com.android.library'
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField 'String', 'API_TWITTER', '"https://api.twitter.com/1.1/"'
+        buildConfigField 'String', 'OAUTH_API_TWITTER', '"https://api.twitter.com/oauth2/token"'
+
+        buildConfigField 'String', 'CONSUMER_KEY', '"AaGvDUHTeohv1VEfsQ4ClpRzG"'
+        buildConfigField 'String', 'CONSUMER_SECRET', '"hDtegDJ1q6BwBSr8bgIVKAjnn6z1ihkp23DEdlRs4Js0qfJEwD"'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        encoding 'UTF-8'
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+dependencies {
+    def applicationDependencies = rootProject.ext.projectDependencies
+
+    implementation applicationDependencies.gson
+    implementation applicationDependencies.retrofit
+    implementation applicationDependencies.retrofitGson
+    implementation applicationDependencies.retrofitRxJava2
+    implementation applicationDependencies.okhttp
+    implementation applicationDependencies.dagger
+    compile project(path: ':domain')
+}

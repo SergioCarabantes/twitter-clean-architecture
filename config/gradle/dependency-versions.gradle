@@ -8,6 +8,7 @@ ext.versions = [
         //Libraries
         supportLibraries            : '27.0.1',
         constraintLayout            : '1.0.2',
+        butterknife                 : '8.8.1',
         dagger                      : '2.11',
         rxJava                      : '2.0.2',
         rxAndroid                   : '2.0.1',
@@ -19,5 +20,9 @@ ext.versions = [
         retrofit                    : '2.3.0',
         timber                      : '4.5.1',
         okhttp_logging_interceptor  : '3.8.1',
-        glide                       : '4.0.0'
+        glide                       : '4.0.0',
+        nullabilityAnnotations      : '3.0.2',
+        autoValueVersion            : '1.5',
+        autoValueParcel             : '0.2.5',
+        autoValueGson               : '0.6.0',
 ]

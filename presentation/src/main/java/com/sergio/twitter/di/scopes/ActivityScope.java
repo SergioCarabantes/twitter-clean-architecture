@@ -1,4 +1,4 @@
-package com.sergio.twitter.di;
+package com.sergio.twitter.di.scopes;
 
 import javax.inject.Scope;
 import java.lang.annotation.Retention;

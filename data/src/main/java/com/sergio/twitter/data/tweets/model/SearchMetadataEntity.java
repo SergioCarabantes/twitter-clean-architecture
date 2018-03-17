@@ -5,5 +5,13 @@ import com.google.gson.annotations.SerializedName;
 public class SearchMetadataEntity {
 
     @SerializedName("count")
-    int getCount;
+    private int getCount;
+
+    public int getGetCount() {
+        return getCount;
+    }
+
+    public void setGetCount(int getCount) {
+        this.getCount = getCount;
+    }
 }

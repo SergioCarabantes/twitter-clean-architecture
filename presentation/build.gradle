@@ -21,6 +21,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    dexOptions {
+        preDexLibraries = false
+    }
 }
 
 dependencies {
@@ -37,16 +41,23 @@ dependencies {
     implementation applicationDependencies.supportLibraryDesign
     implementation applicationDependencies.recyclerView
     implementation applicationDependencies.constraintLayout
+    implementation applicationDependencies.butterknife
+    annotationProcessor applicationDependencies.butterknifeCompiler
     implementation applicationDependencies.androidAnnotations
+    annotationProcessor applicationDependencies.daggerCompiler
     implementation applicationDependencies.dagger
+    annotationProcessor applicationDependencies.daggerAndroidProcessor
+    implementation applicationDependencies.daggerAndroid
     implementation applicationDependencies.rxJava
     implementation applicationDependencies.rxAndroid
     implementation applicationDependencies.gson
     implementation applicationDependencies.okhttp
     implementation applicationDependencies.okhttpLoggingInterceptor
+    implementation applicationDependencies.timberLogging
     implementation applicationDependencies.retrofit
     implementation applicationDependencies.retrofitGson
     implementation applicationDependencies.retrofitRxJava2
     implementation applicationDependencies.glide
-
+    annotationProcessor applicationDependencies.glideProcessor
+    implementation applicationDependencies.nullabilityAnnotations
 }

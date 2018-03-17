@@ -8,6 +8,9 @@ import retrofit2.http.Query;
 public interface TweetsService {
 
     @GET("/1.1/search/tweets.json")
-    Single<SearchTweetsEntity> getTweetList(@Query("q") String queries);
+    Single<SearchTweetsEntity> getTweetList(@Query("q") String queries,
+                                            @Query("result_type") String resultType,
+                                            @Query("count") int count,
+                                            @Query("include_entities") boolean includeEntities);
 
 }

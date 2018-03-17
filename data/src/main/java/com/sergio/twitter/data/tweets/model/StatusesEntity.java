@@ -4,9 +4,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class StatusesEntity {
 
-    @SerializedName("id_str")
-    String getIdStr;
-
     @SerializedName("entities")
-    EntitiesEntity getEntitiesEntity;
+    private EntitiesEntity entity;
+
+    public EntitiesEntity getEntity() {
+        return entity;
+    }
+
+    public void setEntity(EntitiesEntity entity) {
+        this.entity = entity;
+    }
 }

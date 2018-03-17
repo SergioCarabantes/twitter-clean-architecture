@@ -1,6 +1,7 @@
 package com.sergio.twitter.domain.tweets;
 
 import com.sergio.twitter.domain.utils.Interactor;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -17,9 +18,9 @@ public class GetSearchTweetsInteractor implements Interactor<GetSearchTweetsRequ
 
     @Override
     public Disposable execute(GetSearchTweetsRequest request, GetSearchTweetsOutput output) {
-        return searchTweetsRepository.getTweetsList(request.toString())
+        return searchTweetsRepository.getTweetsList(request.getQueries())
                 .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(output::onSearchTweetsFetched,
                         output::onUnknownError);
     }

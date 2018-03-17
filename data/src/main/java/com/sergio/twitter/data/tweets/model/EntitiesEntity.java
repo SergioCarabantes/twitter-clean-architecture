@@ -9,6 +9,11 @@ public class EntitiesEntity {
     @SerializedName("media")
     private List<MediaEntity> getListMediaEntity;
 
+    public List<MediaEntity> getGetListMediaEntity() {
+        return getListMediaEntity;
+    }
 
-
+    public void setGetListMediaEntity(List<MediaEntity> getListMediaEntity) {
+        this.getListMediaEntity = getListMediaEntity;
+    }
 }

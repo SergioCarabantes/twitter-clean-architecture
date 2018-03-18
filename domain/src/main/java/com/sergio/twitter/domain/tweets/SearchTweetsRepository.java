@@ -21,8 +21,8 @@ import io.reactivex.Single;
 
 public interface SearchTweetsRepository {
 
-    Single<SearchTweets> getTweetsList(String queries);
+    Single<SearchTweets> getTweetsList(GetSearchTweetsRequest request);
 
-    Single<SearchTweets> getNextTweetsList(String queries, String maxId);
+    Single<SearchTweets> getNextTweetsList(GetSearchTweetsRequest request);
 
 }

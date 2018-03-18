@@ -34,19 +34,19 @@ public class GetSearchTweetsInteractor implements Interactor<GetSearchTweetsRequ
 
     @Override
     public Disposable execute(GetSearchTweetsRequest request, GetSearchTweetsOutput output) {
-        if (request.getMaxId() != null) {
-            return searchTweetsRepository.getNextTweetsList(request.getQueries(), request.getMaxId())
+        if (request.getNextResults() != null) {
+            return searchTweetsRepository.getNextTweetsList(request)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(output::onSearchTweetsFetched,
                             output::onUnknownError);
+
         } else {
-            return searchTweetsRepository.getTweetsList(request.getQueries())
+            return searchTweetsRepository.getTweetsList(request)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(output::onSearchTweetsFetched,
                             output::onUnknownError);
         }
-
     }
 }

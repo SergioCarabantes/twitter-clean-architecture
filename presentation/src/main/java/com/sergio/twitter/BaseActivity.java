@@ -66,4 +66,10 @@ public abstract class BaseActivity extends AppCompatActivity  {
             toolbar.setNavigationIcon(null);
         }
     }
+
+    protected void disableTitleInToolbar() {
+        if(toolbar != null) {
+            //toolbar.setTitle(null);
+        }
+    }
 }

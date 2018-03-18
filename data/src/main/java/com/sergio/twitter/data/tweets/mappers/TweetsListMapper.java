@@ -26,6 +26,7 @@ import com.sergio.twitter.domain.tweets.model.SearchMetadata;
 import com.sergio.twitter.domain.tweets.model.SearchTweets;
 import com.sergio.twitter.domain.tweets.model.Statuses;
 import com.sergio.twitter.domain.tweets.model.User;
+import timber.log.Timber;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -76,6 +77,8 @@ public class TweetsListMapper implements Mapper<SearchTweetsEntity, SearchTweets
             media.setMediaUrlHttps(mediaEntity.getMediaUrlHttps());
             mediaList.add(media);
         }
+
+        Timber.i("Media list :%s", mediaList.size());
         return mediaList;
     }
 }

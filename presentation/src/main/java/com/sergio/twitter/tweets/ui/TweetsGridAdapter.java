@@ -22,7 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.sergio.twitter.R;
-import com.sergio.twitter.common.UserView;
+import com.sergio.twitter.common.UserData;
 import timber.log.Timber;
 
 import javax.inject.Inject;
@@ -31,7 +31,7 @@ import java.util.List;
 
 public class TweetsGridAdapter extends RecyclerView.Adapter<TweetsViewHolder> {
 
-    private List<UserView> userViewList = new ArrayList<>();
+    private List<UserData> userDataList = new ArrayList<>();
     private ImageLoader imageLoader;
     private ImageClickListener imageClickListener;
 
@@ -48,31 +48,31 @@ public class TweetsGridAdapter extends RecyclerView.Adapter<TweetsViewHolder> {
 
     @Override
     public void onBindViewHolder(TweetsViewHolder holder, int position) {
-        holder.bind(userViewList.get(position), imageClickListener);
+        holder.bind(userDataList.get(position), imageClickListener);
     }
 
     @Override
     public int getItemCount() {
-        Timber.i("SIZE: " + userViewList.size());
-        return userViewList.size();
+        Timber.i("SIZE: " + userDataList.size());
+        return userDataList.size();
     }
 
     public void setOnImageClickListener(ImageClickListener imageClickListener) {
         this.imageClickListener = imageClickListener;
     }
 
-    public void setContent(List<UserView> userViewList) {
-        this.userViewList = userViewList;
+    public void setContent(List<UserData> userDataList) {
+        this.userDataList = userDataList;
         notifyDataSetChanged();
     }
 
-    public void addContent(List<UserView> mediaList) {
-        this.userViewList.addAll(mediaList);
+    public void addContent(List<UserData> mediaList) {
+        this.userDataList.addAll(mediaList);
         notifyDataSetChanged();
     }
 
     public interface ImageClickListener {
 
-        void onMediaClicked(ImageView imageView, UserView userView);
+        void onMediaClicked(ImageView imageView, UserData userData);
     }
 }

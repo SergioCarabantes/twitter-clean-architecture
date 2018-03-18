@@ -21,7 +21,7 @@ import android.widget.ImageView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.sergio.twitter.R;
-import com.sergio.twitter.common.UserView;
+import com.sergio.twitter.common.UserData;
 import com.sergio.twitter.tweets.ui.TweetsGridAdapter.ImageClickListener;
 
 import javax.inject.Inject;
@@ -31,7 +31,7 @@ public class TweetsViewHolder extends InjectedViewHolder {
     @BindView(R.id.image_view) ImageView imageView;
 
     ImageLoader imageLoader;
-    private UserView userView;
+    private UserData userData;
     private ImageClickListener imageClickListener;
 
     @Inject
@@ -40,15 +40,15 @@ public class TweetsViewHolder extends InjectedViewHolder {
         this.imageLoader = imageLoader;
     }
 
-    public void bind(UserView userView, ImageClickListener imageClickListener) {
-        this.userView = userView;
+    public void bind(UserData userData, ImageClickListener imageClickListener) {
+        this.userData = userData;
         this.imageClickListener = imageClickListener;
-        imageLoader.loadImage(userView.getMediaList().get(0).getMediaUrlHttps(), imageView, null);
+        imageLoader.loadImage(userData.getMediaList().get(0).getMediaUrlHttps(), imageView, null);
     }
 
     @OnClick(R.id.item_container)
     public void onClickRow() {
-        imageClickListener.onMediaClicked(imageView, userView);
+        imageClickListener.onMediaClicked(imageView, userData);
 
     }
 }

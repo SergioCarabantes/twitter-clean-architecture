@@ -17,7 +17,7 @@
 package com.sergio.twitter.tweets.presenter;
 
 import com.sergio.twitter.BasePresenter;
-import com.sergio.twitter.common.UserView;
+import com.sergio.twitter.common.UserData;
 import com.sergio.twitter.data.preferences.PreferenceRepositoryImpl;
 import com.sergio.twitter.domain.authentication.GetAuthenticationInteractor;
 import com.sergio.twitter.domain.authentication.GetAuthenticationOutput;
@@ -36,7 +36,7 @@ import java.util.List;
 
 public class TweetsPresenter extends BasePresenter {
 
-    private String query = "#lovewhereyouwork filter:images";
+    private String query = "#lovewhereyouwork";
 
     private GetSearchTweetsInteractor getSearchTweetsInteractor;
     private GetAuthenticationInteractor getAuthenticationInteractor;
@@ -86,20 +86,24 @@ public class TweetsPresenter extends BasePresenter {
     }
 
     private void loadTweets() {
-        view.showLoading();
         GetSearchTweetsRequest request = new GetSearchTweetsRequest();
-        request.setQueries(query);
-
         if (maxId != null && !newQuery) {
-            request.setMaxId(maxId);
+            //request.setMaxId(maxId);
+            request.setNextResults(maxId);
+        } else {
+            request.setQueries(query + " filter:images");
+            request.setCount("50");
+            request.setIncludeEntities(true);
+            request.setResultType("recent");
+            request.setMode("extended");
         }
 
         registerDisposable(getSearchTweetsInteractor.execute(request, new GetSearchTweetsOutput() {
             @Override
             public void onSearchTweetsFetched(SearchTweets searchTweets) {
-                maxId = searchTweets.getSearchMetadata().getMaxId();
+                maxId = searchTweets.getSearchMetadata().getNextResults();
                 view.hideLoading();
-                List<UserView> content = getUser(searchTweets);
+                List<UserData> content = getUser(searchTweets);
                 if (newQuery) {
                     view.setContent(content);
                 } else {
@@ -114,26 +118,22 @@ public class TweetsPresenter extends BasePresenter {
         }));
     }
 
-    private List<UserView> getUser(SearchTweets searchTweets) {
-        Timber.i(" Total tweets received: "+ searchTweets.getSearchMetadata().getCount());
-        List<UserView> userViewList = new ArrayList<>();
+    private List<UserData> getUser(SearchTweets searchTweets) {
+        Timber.d(" Total tweets received: %s", searchTweets.getSearchMetadata().getCount());
+        List<UserData> userDataList = new ArrayList<>();
         for (Statuses statuses: searchTweets.getStatuses()) {
-            UserView userView = new UserView();
+            UserData userData = new UserData();
             List<Media> mediaList = statuses.getEntities().getMediaList();
             if (mediaList != null) {
-                for(Media media: mediaList) {
-                    Timber.i(" Media url founded: "+ media.getMediaUrlHttps());
-                    mediaList.add(media);
-                }
-
-                userView.setUserName(statuses.getUser().getScreenName());
-                userView.setMediaList(mediaList);
-                userView.setProfileImage(statuses.getUser().getProfileImage());
-                userViewList.add(userView);
+                Timber.d(" Media founded: %s", mediaList.size());
+                userData.setUserName(statuses.getUser().getScreenName());
+                userData.setMediaList(mediaList);
+                userData.setProfileImage(statuses.getUser().getProfileImage());
+                userDataList.add(userData);
             }
         }
 
-        return userViewList;
+        return userDataList;
     }
 
     @Override
@@ -142,6 +142,7 @@ public class TweetsPresenter extends BasePresenter {
     }
 
     public void onRefreshLayout() {
+        view.showLoading();
         newQuery = true;
         loadData();
     }
@@ -152,6 +153,7 @@ public class TweetsPresenter extends BasePresenter {
     }
 
     public void onQueryTextSubmit(String query) {
+        view.showLoading();
         this.query = query;
         newQuery = true;
         loadData();

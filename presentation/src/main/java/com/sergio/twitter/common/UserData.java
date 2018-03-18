@@ -20,7 +20,7 @@ import com.sergio.twitter.domain.tweets.model.Media;
 
 import java.util.List;
 
-public class UserView {
+public class UserData {
 
     private List<Media> mediaList;
 

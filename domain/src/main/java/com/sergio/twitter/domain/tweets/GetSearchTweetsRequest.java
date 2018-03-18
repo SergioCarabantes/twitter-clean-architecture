@@ -21,22 +21,28 @@ import com.sergio.twitter.domain.utils.Request;
 public class GetSearchTweetsRequest implements Request {
 
     private String queries;
-
-    private int count;
-
+    private String count;
     private String resultType;
-
-    private String includeEntities;
-
-    public String getMaxId() {
-        return maxId;
-    }
-
-    public void setMaxId(String maxId) {
-        this.maxId = maxId;
-    }
-
     private String maxId;
+    private String mode;
+    private boolean includeEntities;
+    private String nextResults;
+
+    public String getQueries() {
+        return queries;
+    }
+
+    public void setQueries(String queries) {
+        this.queries = queries;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
 
     public String getResultType() {
         return resultType;
@@ -46,27 +52,35 @@ public class GetSearchTweetsRequest implements Request {
         this.resultType = resultType;
     }
 
-    public String getIncludeEntities() {
+    public String getMaxId() {
+        return maxId;
+    }
+
+    public void setMaxId(String maxId) {
+        this.maxId = maxId;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    public boolean isIncludeEntities() {
         return includeEntities;
     }
 
-    public void setIncludeEntities(String includeEntities) {
+    public void setIncludeEntities(boolean includeEntities) {
         this.includeEntities = includeEntities;
     }
 
-    public int getCount() {
-        return count;
+    public String getNextResults() {
+        return nextResults;
     }
 
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public String getQueries() {
-        return queries;
-    }
-
-    public void setQueries(String queries) {
-        this.queries = queries;
+    public void setNextResults(String nextResults) {
+        this.nextResults = nextResults;
     }
 }

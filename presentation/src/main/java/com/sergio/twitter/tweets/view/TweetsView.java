@@ -17,14 +17,14 @@
 package com.sergio.twitter.tweets.view;
 
 import com.sergio.twitter.BaseView;
-import com.sergio.twitter.common.UserView;
+import com.sergio.twitter.common.UserData;
 
 import java.util.List;
 
 public interface TweetsView extends BaseView {
 
-    void addContent(List<UserView> content);
+    void addContent(List<UserData> content);
 
-    void setContent(List<UserView> content);
+    void setContent(List<UserData> content);
 
 }

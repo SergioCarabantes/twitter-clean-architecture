@@ -18,17 +18,17 @@ package com.sergio.twitter.tweets.ui;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.Target;
-import com.sergio.twitter.R;
 
 import javax.inject.Inject;
 
@@ -56,6 +56,18 @@ public class ImageLoader {
                 return false;
             }
         }).into(imageView);
+    }
+
+    public void loadImageCircular(String url, ImageView imageView) {
+        requestManager.asBitmap().load(url).into(new BitmapImageViewTarget(imageView) {
+            @Override
+            protected void setResource(Bitmap resource) {
+                RoundedBitmapDrawable circularBitmapDrawable =
+                        RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                circularBitmapDrawable.setCircular(true);
+                imageView.setImageDrawable(circularBitmapDrawable);
+            }
+        });
     }
 
     public interface ImageLoaderListener {

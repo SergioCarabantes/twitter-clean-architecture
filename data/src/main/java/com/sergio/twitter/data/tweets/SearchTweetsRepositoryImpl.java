@@ -18,6 +18,7 @@ package com.sergio.twitter.data.tweets;
 
 import com.sergio.twitter.data.tweets.mappers.TweetsListMapper;
 import com.sergio.twitter.data.tweets.network.SearchTweetsService;
+import com.sergio.twitter.domain.tweets.GetSearchTweetsRequest;
 import com.sergio.twitter.domain.tweets.SearchTweetsRepository;
 import com.sergio.twitter.domain.tweets.model.SearchTweets;
 import io.reactivex.Single;
@@ -38,17 +39,22 @@ public class SearchTweetsRepositoryImpl implements SearchTweetsRepository {
     }
 
     @Override
-    public Single<SearchTweets> getTweetsList(String queries) {
-        return searchTweetsService.getTweetList(queries, "recent", true)
+    public Single<SearchTweets> getTweetsList(GetSearchTweetsRequest request) {
+        return searchTweetsService.getTweetList(
+                request.getQueries(),
+                request.getResultType(),
+                request.getMaxId(),
+                request.getCount(),
+                request.getMode(),
+                request.isIncludeEntities())
                 .map(tweetsListMapper::map)
                 .doOnError(Timber::e);
     }
 
     @Override
-    public Single<SearchTweets> getNextTweetsList(String queries, String maxId) {
-        return searchTweetsService.getNextTweetList(queries, maxId,"recent", true)
+    public Single<SearchTweets> getNextTweetsList(GetSearchTweetsRequest request) {
+        return searchTweetsService.getNextTweetList(request.getNextResults())
                 .map(tweetsListMapper::map)
                 .doOnError(Timber::e);
     }
-
 }

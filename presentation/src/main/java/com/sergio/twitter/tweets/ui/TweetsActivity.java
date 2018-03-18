@@ -25,12 +25,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.EditText;
 import android.widget.ImageView;
 import butterknife.BindView;
 import com.sergio.twitter.BaseActivity;
 import com.sergio.twitter.R;
 import com.sergio.twitter.TwitterApplication;
-import com.sergio.twitter.common.UserView;
+import com.sergio.twitter.common.UserData;
 import com.sergio.twitter.di.components.ApplicationComponent;
 import com.sergio.twitter.tweetdetails.TweetDetailActivity;
 import com.sergio.twitter.tweets.presenter.TweetsPresenter;
@@ -98,12 +99,12 @@ public class TweetsActivity extends BaseActivity implements TweetsView, ImageCli
     }
 
     @Override
-    public void addContent(List<UserView> content) {
+    public void addContent(List<UserData> content) {
         adapter.addContent(content);
     }
 
     @Override
-    public void setContent(List<UserView> content) {
+    public void setContent(List<UserData> content) {
         adapter.setContent(content);
     }
 
@@ -130,7 +131,7 @@ public class TweetsActivity extends BaseActivity implements TweetsView, ImageCli
                     previousTotal = totalItemCount;
                 }
             }
-            int visibleThreshold = 5;
+            int visibleThreshold = 2;
             if (!isStillLoading && (totalItemCount - visibleItemCount)
                     <= (firstVisibleItem + visibleThreshold)) {
                 presenter.onScrollFinish();
@@ -149,6 +150,10 @@ public class TweetsActivity extends BaseActivity implements TweetsView, ImageCli
 
     private void initSearchView(Menu menu) {
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setQueryHint(getString(R.string.search_hint));
+        EditText searchEditText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        searchEditText.setTextColor(getResources().getColor(R.color.colorBackground));
+        searchEditText.setHintTextColor(getResources().getColor(R.color.colorBackground));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -179,12 +184,12 @@ public class TweetsActivity extends BaseActivity implements TweetsView, ImageCli
     }
 
     @Override
-    public void onMediaClicked(ImageView imageView, UserView userView) {
-        Timber.i("Item clicked: " + userView.getMediaList().get(0).getMediaUrlHttps());
+    public void onMediaClicked(ImageView imageView, UserData userData) {
+        Timber.i("Item clicked: " + userData.getMediaList().get(0).getMediaUrlHttps());
         Intent intent = new Intent(this, TweetDetailActivity.class);
-        intent.putExtra(TweetDetailActivity.EXTRA_IMAGE, userView.getMediaList().get(0).getMediaUrlHttps());
-        intent.putExtra(TweetDetailActivity.EXTRA_SCREEN_NAME, userView.getUserName());
-        intent.putExtra(TweetDetailActivity.EXTRA_PROFILE_PIC, userView.getProfileImage());
+        intent.putExtra(TweetDetailActivity.EXTRA_IMAGE, userData.getMediaList().get(0).getMediaUrlHttps());
+        intent.putExtra(TweetDetailActivity.EXTRA_SCREEN_NAME, userData.getUserName());
+        intent.putExtra(TweetDetailActivity.EXTRA_PROFILE_PIC, userData.getProfileImage());
         ActivityOptionsCompat options = ActivityOptionsCompat.
                 makeSceneTransitionAnimation(this, imageView, "image");
         startActivity(intent, options.toBundle());

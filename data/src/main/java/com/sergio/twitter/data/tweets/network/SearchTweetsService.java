@@ -19,6 +19,7 @@ package com.sergio.twitter.data.tweets.network;
 import com.sergio.twitter.data.tweets.model.SearchTweetsEntity;
 import io.reactivex.Single;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface SearchTweetsService {
@@ -26,12 +27,12 @@ public interface SearchTweetsService {
     @GET("/1.1/search/tweets.json")
     Single<SearchTweetsEntity> getTweetList(@Query("q") String queries,
                                             @Query("result_type") String resultType,
+                                            @Query("max_id") String maxId,
+                                            @Query("count") String count,
+                                            @Query("tweet_mode") String mode,
                                             @Query("include_entities") boolean includeEntities);
 
-    @GET("/1.1/search/tweets.json")
-    Single<SearchTweetsEntity> getNextTweetList(@Query("q") String queries,
-                                                @Query("max_id") String maxId,
-                                                @Query("result_type") String resultType,
-                                                @Query("include_entities") boolean includeEntities);
+    @GET("/1.1/search/tweets.json{next_results}")
+    Single<SearchTweetsEntity> getNextTweetList(@Path(value = "next_results", encoded = false) String nextResults);
 
 }

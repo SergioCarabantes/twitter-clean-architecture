@@ -24,6 +24,8 @@ public class UserData {
 
     private List<Media> mediaList;
 
+    private List<Media> mediaListExtended;
+
     private String userName;
 
     private String profileImage;
@@ -50,5 +52,13 @@ public class UserData {
 
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
+    }
+
+    public List<Media> getMediaListExtended() {
+        return mediaListExtended;
+    }
+
+    public void setMediaListExtended(List<Media> mediaListExtended) {
+        this.mediaListExtended = mediaListExtended;
     }
 }

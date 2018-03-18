@@ -23,6 +23,8 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -35,6 +37,7 @@ import com.sergio.twitter.di.components.ApplicationComponent;
 import com.sergio.twitter.tweets.ui.ImageLoader;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 
 import static com.sergio.twitter.tweets.ui.ImageLoader.ImageLoaderListener;
 
@@ -45,25 +48,37 @@ public class TweetDetailActivity extends BaseActivity implements ImageLoaderList
     public static String EXTRA_PROFILE_PIC = "EXTRA_PROFILE_PIC";
 
     @BindView(R.id.container) ConstraintLayout container;
-    @BindView(R.id.image_view_detail) ImageView imageBackground;
+    @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.image_view_profile_pic) ImageView profilePicImageView;
     @BindView(R.id.text_view_screen_name) TextView screenNameTextView;
+
     @Inject ImageLoader imageLoader;
+    @Inject TweetsDetailAdapter adapter;
+
+    private LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeInjector();
+        initializeRecyclerView();
         disableTitleInToolbar();
         initUI();
 
     }
 
+    private void initializeRecyclerView() {
+        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+    }
+
     private void initUI() {
-        String url = getIntent().getStringExtra(EXTRA_IMAGE);
+        ArrayList<String> urlList = getIntent().getStringArrayListExtra(EXTRA_IMAGE);
         String screenName = getIntent().getStringExtra(EXTRA_SCREEN_NAME);
         String profilePic = getIntent().getStringExtra(EXTRA_PROFILE_PIC);
-        imageLoader.loadImage(url, imageBackground, this);
+        adapter.setImageLoaderListener(this);
+        adapter.setContent(urlList);
         imageLoader.loadImageCircular(profilePic, profilePicImageView);
         screenNameTextView.setText(String.format("@%s", screenName));
     }
@@ -89,7 +104,7 @@ public class TweetDetailActivity extends BaseActivity implements ImageLoaderList
                 .generate(palette -> {
                     Palette.Swatch textSwatch = palette.getDarkMutedSwatch();
                     if (textSwatch != null) {
-                        container.setBackgroundColor(textSwatch.getRgb());
+                        recyclerView.setBackgroundColor(textSwatch.getRgb());
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             setupStatusBarAndNavColor(textSwatch.getRgb());
                         }

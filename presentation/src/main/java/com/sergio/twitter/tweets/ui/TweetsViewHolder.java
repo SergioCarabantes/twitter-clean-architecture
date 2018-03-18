@@ -18,6 +18,7 @@ package com.sergio.twitter.tweets.ui;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.sergio.twitter.R;
@@ -29,6 +30,7 @@ import javax.inject.Inject;
 public class TweetsViewHolder extends InjectedViewHolder {
 
     @BindView(R.id.image_view) ImageView imageView;
+    @BindView(R.id.multiple) TextView textViewMultiple;
 
     ImageLoader imageLoader;
     private UserData userData;
@@ -44,6 +46,11 @@ public class TweetsViewHolder extends InjectedViewHolder {
         this.userData = userData;
         this.imageClickListener = imageClickListener;
         imageLoader.loadImage(userData.getMediaList().get(0).getMediaUrlHttps(), imageView, null);
+        if (userData.getMediaListExtended().size() > 1) {
+            textViewMultiple.setVisibility(View.VISIBLE);
+        } else {
+            textViewMultiple.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.item_container)

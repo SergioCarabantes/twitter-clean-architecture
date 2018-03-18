@@ -23,6 +23,9 @@ public class StatusesEntity {
     @SerializedName("entities")
     private EntitiesEntity entity;
 
+    @SerializedName("extended_entities")
+    private EntitiesEntity extendedEntities;
+
     @SerializedName("user")
     private UserEntity userEntity;
 
@@ -32,5 +35,9 @@ public class StatusesEntity {
 
     public UserEntity getUserEntity() {
         return userEntity;
+    }
+
+    public EntitiesEntity getExtendedEntities() {
+        return extendedEntities;
     }
 }

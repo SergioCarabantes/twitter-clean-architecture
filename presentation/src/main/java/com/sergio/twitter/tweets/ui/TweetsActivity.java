@@ -33,12 +33,13 @@ import com.sergio.twitter.R;
 import com.sergio.twitter.TwitterApplication;
 import com.sergio.twitter.common.UserData;
 import com.sergio.twitter.di.components.ApplicationComponent;
+import com.sergio.twitter.domain.tweets.model.Media;
 import com.sergio.twitter.tweetdetails.TweetDetailActivity;
 import com.sergio.twitter.tweets.presenter.TweetsPresenter;
 import com.sergio.twitter.tweets.view.TweetsView;
-import timber.log.Timber;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.sergio.twitter.tweets.ui.TweetsGridAdapter.ImageClickListener;
@@ -185,9 +186,20 @@ public class TweetsActivity extends BaseActivity implements TweetsView, ImageCli
 
     @Override
     public void onMediaClicked(ImageView imageView, UserData userData) {
-        Timber.i("Item clicked: " + userData.getMediaList().get(0).getMediaUrlHttps());
         Intent intent = new Intent(this, TweetDetailActivity.class);
-        intent.putExtra(TweetDetailActivity.EXTRA_IMAGE, userData.getMediaList().get(0).getMediaUrlHttps());
+        ArrayList<String> urlList = new ArrayList<>();
+
+        if (userData.getMediaListExtended() != null && userData.getMediaListExtended().size() > 1) {
+            for (Media media : userData.getMediaListExtended()) {
+                urlList.add(media.getMediaUrlHttps());
+            }
+        } else {
+            for (Media media : userData.getMediaList()) {
+                urlList.add(media.getMediaUrlHttps());
+            }
+        }
+
+        intent.putStringArrayListExtra(TweetDetailActivity.EXTRA_IMAGE, urlList);
         intent.putExtra(TweetDetailActivity.EXTRA_SCREEN_NAME, userData.getUserName());
         intent.putExtra(TweetDetailActivity.EXTRA_PROFILE_PIC, userData.getProfileImage());
         ActivityOptionsCompat options = ActivityOptionsCompat.

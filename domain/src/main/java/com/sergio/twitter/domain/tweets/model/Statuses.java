@@ -21,6 +21,8 @@ public class Statuses {
 
     private Entities entities;
 
+    private Entities extendedEntities;
+
     private User user;
 
     public Entities getEntities() {
@@ -37,5 +39,13 @@ public class Statuses {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Entities getExtendedEntities() {
+        return extendedEntities;
+    }
+
+    public void setExtendedEntities(Entities extendedEntities) {
+        this.extendedEntities = extendedEntities;
     }
 }

@@ -59,8 +59,18 @@ public class TweetsListMapper implements Mapper<SearchTweetsEntity, SearchTweets
             if (listMediaEntity != null) {
                 entities.setMediaList(getMedia(listMediaEntity));
             }
+
+            Entities extendedEntities = new Entities();
+            if (statusesEntity.getExtendedEntities() != null) {
+                List<MediaEntity> listMediaExtendedEntity = statusesEntity.getExtendedEntities().getMediaEntityList();
+                if (listMediaExtendedEntity != null) {
+                    extendedEntities.setMediaList(getMedia(listMediaExtendedEntity));
+                }
+            }
+
             Statuses statuses = new Statuses();
             statuses.setEntities(entities);
+            statuses.setExtendedEntities(extendedEntities);
             User user = new User();
             user.setProfileImage(statusesEntity.getUserEntity().getProfileImage());
             user.setScreenName(statusesEntity.getUserEntity().getScreenName());

@@ -129,8 +129,17 @@ public class TweetsPresenter extends BasePresenter {
                 userData.setUserName(statuses.getUser().getScreenName());
                 userData.setMediaList(mediaList);
                 userData.setProfileImage(statuses.getUser().getProfileImage());
+
+                if (statuses.getExtendedEntities() != null) {
+                    List<Media> mediaListExtended = statuses.getExtendedEntities().getMediaList();
+                    if (mediaListExtended != null) {
+                        userData.setMediaListExtended(mediaListExtended);
+                    }
+                }
+
                 userDataList.add(userData);
             }
+
         }
 
         return userDataList;

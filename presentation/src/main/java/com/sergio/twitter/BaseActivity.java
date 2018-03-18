@@ -1,10 +1,9 @@
 package com.sergio.twitter;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import javax.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.sergio.twitter.di.components.ApplicationComponent;
@@ -16,11 +15,7 @@ public abstract class BaseActivity extends AppCompatActivity  {
 
     @Nullable
     @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
-    @Nullable
-    @BindView(R.id.loading)
-    View loadingView;
+    protected Toolbar toolbar;
 
     @Inject
     protected Navigator navigator;
@@ -41,18 +36,6 @@ public abstract class BaseActivity extends AppCompatActivity  {
     }
 
     public abstract int getLayoutResource();
-
-    public void showLoading() {
-        if (loadingView != null) {
-            loadingView.setVisibility(View.VISIBLE);
-        }
-    }
-
-    public void hideLoading() {
-        if (loadingView != null) {
-            loadingView.setVisibility(View.GONE);
-        }
-    }
 
     protected void configureToolbar() {
         if (toolbar != null) {

@@ -43,4 +43,9 @@ public class TweetsGridAdapter extends RecyclerView.Adapter<TweetsViewHolder> {
         this.mediaList = mediaList;
         notifyDataSetChanged();
     }
+
+    public void addContent(List<Media> mediaList) {
+        this.mediaList.addAll(mediaList);
+        notifyDataSetChanged();
+    }
 }

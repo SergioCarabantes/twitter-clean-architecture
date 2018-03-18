@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface TweetsView extends BaseView {
 
-    void showContent(List<Media> content);
+    void addContent(List<Media> content);
+
+    void setContent(List<Media> content);
 
 }

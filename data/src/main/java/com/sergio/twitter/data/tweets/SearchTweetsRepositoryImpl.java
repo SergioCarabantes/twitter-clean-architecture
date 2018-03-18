@@ -23,7 +23,14 @@ public class SearchTweetsRepositoryImpl implements SearchTweetsRepository {
 
     @Override
     public Single<SearchTweets> getTweetsList(String queries) {
-        return tweetsService.getTweetList(queries, "recent", 50, true)
+        return tweetsService.getTweetList(queries, "recent", true)
+                .map(tweetsListMapper::map)
+                .doOnError(Timber::e);
+    }
+
+    @Override
+    public Single<SearchTweets> getNextTweetsList(String queries, String maxId) {
+        return tweetsService.getNextTweetList(queries, maxId,"recent", true)
                 .map(tweetsListMapper::map)
                 .doOnError(Timber::e);
     }

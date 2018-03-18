@@ -2,6 +2,7 @@ package com.sergio.twitter.domain.authentication;
 
 import com.sergio.twitter.domain.local.PreferenceRepository;
 import com.sergio.twitter.domain.utils.NoArgInteractor;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -22,7 +23,7 @@ public class GetAuthenticationInteractor implements NoArgInteractor<GetAuthentic
     public Disposable execute(GetAuthenticationOutput output) {
         return authenticationRepository.getAuthentication()
                 .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((authentication, throwable) -> {
                     if (authentication == null) {
                         output.onUnknownError(throwable);

@@ -7,4 +7,6 @@ public interface SearchTweetsRepository {
 
     Single<SearchTweets> getTweetsList(String queries);
 
+    Single<SearchTweets> getNextTweetsList(String queries, String maxId);
+
 }

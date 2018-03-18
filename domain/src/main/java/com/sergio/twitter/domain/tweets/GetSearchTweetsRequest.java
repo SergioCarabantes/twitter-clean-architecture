@@ -9,13 +9,15 @@ public class GetSearchTweetsRequest implements Request {
     private String resultType;
     private String includeEntities;
 
-    public GetSearchTweetsRequest(String queries) {
-        this.queries = queries;
+    public String getMaxId() {
+        return maxId;
     }
 
-    public String getQueries() {
-        return queries;
+    public void setMaxId(String maxId) {
+        this.maxId = maxId;
     }
+
+    private String maxId;
 
     public String getResultType() {
         return resultType;
@@ -39,5 +41,13 @@ public class GetSearchTweetsRequest implements Request {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public String getQueries() {
+        return queries;
+    }
+
+    public void setQueries(String queries) {
+        this.queries = queries;
     }
 }

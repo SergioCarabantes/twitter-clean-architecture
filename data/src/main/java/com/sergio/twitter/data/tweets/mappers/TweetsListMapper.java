@@ -6,6 +6,7 @@ import com.sergio.twitter.data.tweets.model.SearchTweetsEntity;
 import com.sergio.twitter.data.tweets.model.StatusesEntity;
 import com.sergio.twitter.domain.tweets.model.Entities;
 import com.sergio.twitter.domain.tweets.model.Media;
+import com.sergio.twitter.domain.tweets.model.SearchMetadata;
 import com.sergio.twitter.domain.tweets.model.SearchTweets;
 import com.sergio.twitter.domain.tweets.model.Statuses;
 
@@ -23,6 +24,11 @@ public class TweetsListMapper implements Mapper<SearchTweetsEntity, SearchTweets
     public SearchTweets map(SearchTweetsEntity searchTweetsEntity) {
         SearchTweets searchTweets = new SearchTweets();
         searchTweets.setStatuses(getStatuses(searchTweetsEntity.getGetStatusesEntity()));
+        SearchMetadata searchMetadata = new SearchMetadata();
+        searchMetadata.setCount(searchTweetsEntity.getSearchMetadataEntity().getCount());
+        searchMetadata.setNextResults(searchTweetsEntity.getSearchMetadataEntity().getNextResults());
+        searchMetadata.setMaxId(searchTweetsEntity.getSearchMetadataEntity().getMaxId());
+        searchTweets.setSearchMetadata(searchMetadata);
         return searchTweets;
     }
 

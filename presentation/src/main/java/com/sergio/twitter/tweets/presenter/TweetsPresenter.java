@@ -19,10 +19,14 @@ import java.util.List;
 
 public class TweetsPresenter extends BasePresenter {
 
+    private String query = "#lovewhereyouwork filter:images";
+
     private GetSearchTweetsInteractor getSearchTweetsInteractor;
     private GetAuthenticationInteractor getAuthenticationInteractor;
     private PreferenceRepositoryImpl preferenceRepository;
     private TweetsView view;
+    private String maxId;
+    private boolean newQuery;
 
     @Inject
     public TweetsPresenter(GetSearchTweetsInteractor getSearchTweetsInteractor,
@@ -39,6 +43,10 @@ public class TweetsPresenter extends BasePresenter {
 
     @Override
     public void resume() {
+        loadData();
+    }
+
+    private void loadData() {
         if (preferenceRepository.getAccessToken() != null) {
             loadTweets();
         } else {
@@ -62,12 +70,24 @@ public class TweetsPresenter extends BasePresenter {
 
     private void loadTweets() {
         view.showLoading();
-        registerDisposable(getSearchTweetsInteractor.execute(
-                new GetSearchTweetsRequest("#lovewhereyouwork filter:images"), new GetSearchTweetsOutput() {
+        GetSearchTweetsRequest request = new GetSearchTweetsRequest();
+        request.setQueries(query);
+
+        if (maxId != null && !newQuery) {
+            request.setMaxId(maxId);
+        }
+
+        registerDisposable(getSearchTweetsInteractor.execute(request, new GetSearchTweetsOutput() {
             @Override
             public void onSearchTweetsFetched(SearchTweets searchTweets) {
+                maxId = searchTweets.getSearchMetadata().getMaxId();
                 view.hideLoading();
-                view.showContent(getContent(searchTweets));
+                List<Media> content = getContent(searchTweets);
+                if (newQuery) {
+                    view.setContent(content);
+                } else {
+                    view.addContent(content);
+                }
             }
 
             @Override
@@ -79,11 +99,12 @@ public class TweetsPresenter extends BasePresenter {
 
     private List<Media> getContent(SearchTweets searchTweets) {
         List<Media> mediaList = new ArrayList<>();
+        Timber.i(" Total tweets received: "+ searchTweets.getSearchMetadata().getCount());
         for (Statuses statuses: searchTweets.getStatuses()) {
             List<Media> temp = statuses.getEntities().getMediaList();
             if (temp != null) {
                 for(Media media: temp) {
-                    Timber.i("YEAH!!!: "+ media.getMediaUrlHttps());
+                    Timber.i(" Media url founded: "+ media.getMediaUrlHttps());
                     mediaList.add(media);
                 }
             }
@@ -95,5 +116,21 @@ public class TweetsPresenter extends BasePresenter {
     @Override
     public void destroy() {
         clearSubscriptions();
+    }
+
+    public void onRefreshLayout() {
+        newQuery = true;
+        loadData();
+    }
+
+    public void onScrollFinish() {
+        newQuery = false;
+        loadData();
+    }
+
+    public void onQueryTextSubmit(String query) {
+        this.query = query;
+        newQuery = true;
+        loadData();
     }
 }

@@ -10,7 +10,12 @@ public interface TweetsService {
     @GET("/1.1/search/tweets.json")
     Single<SearchTweetsEntity> getTweetList(@Query("q") String queries,
                                             @Query("result_type") String resultType,
-                                            @Query("count") int count,
                                             @Query("include_entities") boolean includeEntities);
+
+    @GET("/1.1/search/tweets.json")
+    Single<SearchTweetsEntity> getNextTweetList(@Query("q") String queries,
+                                                @Query("max_id") String maxId,
+                                                @Query("result_type") String resultType,
+                                                @Query("include_entities") boolean includeEntities);
 
 }

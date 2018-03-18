@@ -14,8 +14,24 @@
  * limitations under the License.
  */
 
-package com.sergio.twitter.domain.utils;
+package com.sergio.twitter.data.tweets.model;
 
-public interface Request {
+import com.google.gson.annotations.SerializedName;
+
+public class UserEntity {
+
+    @SerializedName("screen_name")
+    private String screenName;
+
+    @SerializedName("profile_image_url_https")
+    private String profileImage;
+
+    public String getScreenName() {
+        return screenName;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
 
 }

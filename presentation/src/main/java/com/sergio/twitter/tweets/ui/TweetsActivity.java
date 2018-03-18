@@ -1,25 +1,48 @@
+/*
+ * Copyright (C) 2018 Sergio Carabantes
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.sergio.twitter.tweets.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.ImageView;
 import butterknife.BindView;
 import com.sergio.twitter.BaseActivity;
 import com.sergio.twitter.R;
 import com.sergio.twitter.TwitterApplication;
+import com.sergio.twitter.common.UserView;
 import com.sergio.twitter.di.components.ApplicationComponent;
-import com.sergio.twitter.domain.tweets.model.Media;
+import com.sergio.twitter.tweetdetails.TweetDetailActivity;
 import com.sergio.twitter.tweets.presenter.TweetsPresenter;
 import com.sergio.twitter.tweets.view.TweetsView;
+import timber.log.Timber;
 
 import javax.inject.Inject;
 import java.util.List;
 
-public class TweetsActivity extends BaseActivity implements TweetsView {
+import static com.sergio.twitter.tweets.ui.TweetsGridAdapter.ImageClickListener;
+
+public class TweetsActivity extends BaseActivity implements TweetsView, ImageClickListener {
 
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
@@ -49,6 +72,7 @@ public class TweetsActivity extends BaseActivity implements TweetsView {
         gridLayoutManager = new GridLayoutManager(this, columns);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.addOnScrollListener(recyclerViewOnScrollListener);
+        adapter.setOnImageClickListener(this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -74,12 +98,12 @@ public class TweetsActivity extends BaseActivity implements TweetsView {
     }
 
     @Override
-    public void addContent(List<Media> content) {
+    public void addContent(List<UserView> content) {
         adapter.addContent(content);
     }
 
     @Override
-    public void setContent(List<Media> content) {
+    public void setContent(List<UserView> content) {
         adapter.setContent(content);
     }
 
@@ -154,4 +178,16 @@ public class TweetsActivity extends BaseActivity implements TweetsView {
         presenter.onDestroy();
     }
 
+    @Override
+    public void onMediaClicked(ImageView imageView, UserView userView) {
+        Timber.i("Item clicked: " + userView.getMediaList().get(0).getMediaUrlHttps());
+        Intent intent = new Intent(this, TweetDetailActivity.class);
+        intent.putExtra(TweetDetailActivity.EXTRA_IMAGE, userView.getMediaList().get(0).getMediaUrlHttps());
+        intent.putExtra(TweetDetailActivity.EXTRA_SCREEN_NAME, userView.getUserName());
+        intent.putExtra(TweetDetailActivity.EXTRA_PROFILE_PIC, userView.getProfileImage());
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(this, imageView, "image");
+        startActivity(intent, options.toBundle());
+
+    }
 }

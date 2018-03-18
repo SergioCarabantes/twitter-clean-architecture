@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2018 Sergio Carabantes
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.sergio.twitter.data.tweets.mappers;
 
 import com.sergio.twitter.data.Mapper;
@@ -9,6 +25,7 @@ import com.sergio.twitter.domain.tweets.model.Media;
 import com.sergio.twitter.domain.tweets.model.SearchMetadata;
 import com.sergio.twitter.domain.tweets.model.SearchTweets;
 import com.sergio.twitter.domain.tweets.model.Statuses;
+import com.sergio.twitter.domain.tweets.model.User;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -23,7 +40,7 @@ public class TweetsListMapper implements Mapper<SearchTweetsEntity, SearchTweets
     @Override
     public SearchTweets map(SearchTweetsEntity searchTweetsEntity) {
         SearchTweets searchTweets = new SearchTweets();
-        searchTweets.setStatuses(getStatuses(searchTweetsEntity.getGetStatusesEntity()));
+        searchTweets.setStatuses(getStatuses(searchTweetsEntity.getStatusesEntityList()));
         SearchMetadata searchMetadata = new SearchMetadata();
         searchMetadata.setCount(searchTweetsEntity.getSearchMetadataEntity().getCount());
         searchMetadata.setNextResults(searchTweetsEntity.getSearchMetadataEntity().getNextResults());
@@ -37,12 +54,16 @@ public class TweetsListMapper implements Mapper<SearchTweetsEntity, SearchTweets
         for(StatusesEntity statusesEntity: statusesEntityList) {
             Entities entities = new Entities();
 
-            List<MediaEntity> listMediaEntity = statusesEntity.getEntity().getGetListMediaEntity();
+            List<MediaEntity> listMediaEntity = statusesEntity.getEntity().getMediaEntityList();
             if (listMediaEntity != null) {
                 entities.setMediaList(getMedia(listMediaEntity));
             }
             Statuses statuses = new Statuses();
             statuses.setEntities(entities);
+            User user = new User();
+            user.setProfileImage(statusesEntity.getUserEntity().getProfileImage());
+            user.setScreenName(statusesEntity.getUserEntity().getScreenName());
+            statuses.setUser(user);
             statusesList.add(statuses);
         }
         return statusesList;

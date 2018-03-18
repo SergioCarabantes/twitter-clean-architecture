@@ -1,7 +1,24 @@
+/*
+ * Copyright (C) 2018 Sergio Carabantes
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.sergio.twitter.tweets.presenter;
 
 import com.sergio.twitter.BasePresenter;
-import com.sergio.twitter.data.local.PreferenceRepositoryImpl;
+import com.sergio.twitter.common.UserView;
+import com.sergio.twitter.data.preferences.PreferenceRepositoryImpl;
 import com.sergio.twitter.domain.authentication.GetAuthenticationInteractor;
 import com.sergio.twitter.domain.authentication.GetAuthenticationOutput;
 import com.sergio.twitter.domain.tweets.GetSearchTweetsInteractor;
@@ -82,7 +99,7 @@ public class TweetsPresenter extends BasePresenter {
             public void onSearchTweetsFetched(SearchTweets searchTweets) {
                 maxId = searchTweets.getSearchMetadata().getMaxId();
                 view.hideLoading();
-                List<Media> content = getContent(searchTweets);
+                List<UserView> content = getUser(searchTweets);
                 if (newQuery) {
                     view.setContent(content);
                 } else {
@@ -97,20 +114,26 @@ public class TweetsPresenter extends BasePresenter {
         }));
     }
 
-    private List<Media> getContent(SearchTweets searchTweets) {
-        List<Media> mediaList = new ArrayList<>();
+    private List<UserView> getUser(SearchTweets searchTweets) {
         Timber.i(" Total tweets received: "+ searchTweets.getSearchMetadata().getCount());
+        List<UserView> userViewList = new ArrayList<>();
         for (Statuses statuses: searchTweets.getStatuses()) {
-            List<Media> temp = statuses.getEntities().getMediaList();
-            if (temp != null) {
-                for(Media media: temp) {
+            UserView userView = new UserView();
+            List<Media> mediaList = statuses.getEntities().getMediaList();
+            if (mediaList != null) {
+                for(Media media: mediaList) {
                     Timber.i(" Media url founded: "+ media.getMediaUrlHttps());
                     mediaList.add(media);
                 }
+
+                userView.setUserName(statuses.getUser().getScreenName());
+                userView.setMediaList(mediaList);
+                userView.setProfileImage(statuses.getUser().getProfileImage());
+                userViewList.add(userView);
             }
         }
 
-        return mediaList;
+        return userViewList;
     }
 
     @Override

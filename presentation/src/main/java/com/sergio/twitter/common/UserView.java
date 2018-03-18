@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
-package com.sergio.twitter.domain.tweets.model;
+package com.sergio.twitter.common;
 
+import com.sergio.twitter.domain.tweets.model.Media;
 
 import java.util.List;
 
-public class Entities {
+public class UserView {
 
     private List<Media> mediaList;
+
+    private String userName;
+
+    private String profileImage;
 
     public List<Media> getMediaList() {
         return mediaList;
@@ -29,5 +34,21 @@ public class Entities {
 
     public void setMediaList(List<Media> mediaList) {
         this.mediaList = mediaList;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 }

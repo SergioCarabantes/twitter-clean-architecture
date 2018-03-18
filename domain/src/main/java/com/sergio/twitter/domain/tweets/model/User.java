@@ -14,8 +14,27 @@
  * limitations under the License.
  */
 
-package com.sergio.twitter.domain.utils;
+package com.sergio.twitter.domain.tweets.model;
 
-public interface Request {
+public class User {
 
+    private String screenName;
+
+    private String profileImage;
+
+    public String getScreenName() {
+        return screenName;
+    }
+
+    public void setScreenName(String screenName) {
+        this.screenName = screenName;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
 }

@@ -14,8 +14,12 @@
  * limitations under the License.
  */
 
-package com.sergio.twitter.domain.utils;
+package com.sergio.twitter.domain.preferences;
 
-public interface Request {
+public interface PreferenceRepository {
+
+    void saveAccessToken(String accessToken);
+
+    String getAccessToken();
 
 }

@@ -1,11 +1,28 @@
+/*
+ * Copyright (C) 2018 Sergio Carabantes
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.sergio.twitter.tweets.ui;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import com.sergio.twitter.R;
-import com.sergio.twitter.domain.tweets.model.Media;
+import com.sergio.twitter.common.UserView;
 import timber.log.Timber;
 
 import javax.inject.Inject;
@@ -14,8 +31,9 @@ import java.util.List;
 
 public class TweetsGridAdapter extends RecyclerView.Adapter<TweetsViewHolder> {
 
-    private List<Media> mediaList = new ArrayList<>();
+    private List<UserView> userViewList = new ArrayList<>();
     private ImageLoader imageLoader;
+    private ImageClickListener imageClickListener;
 
     @Inject
     public TweetsGridAdapter(ImageLoader imageLoader) {
@@ -30,22 +48,31 @@ public class TweetsGridAdapter extends RecyclerView.Adapter<TweetsViewHolder> {
 
     @Override
     public void onBindViewHolder(TweetsViewHolder holder, int position) {
-        holder.bind(mediaList.get(position));
+        holder.bind(userViewList.get(position), imageClickListener);
     }
 
     @Override
     public int getItemCount() {
-        Timber.i("SIZE: " + mediaList.size());
-        return mediaList.size();
+        Timber.i("SIZE: " + userViewList.size());
+        return userViewList.size();
     }
 
-    public void setContent(List<Media> mediaList) {
-        this.mediaList = mediaList;
+    public void setOnImageClickListener(ImageClickListener imageClickListener) {
+        this.imageClickListener = imageClickListener;
+    }
+
+    public void setContent(List<UserView> userViewList) {
+        this.userViewList = userViewList;
         notifyDataSetChanged();
     }
 
-    public void addContent(List<Media> mediaList) {
-        this.mediaList.addAll(mediaList);
+    public void addContent(List<UserView> mediaList) {
+        this.userViewList.addAll(mediaList);
         notifyDataSetChanged();
+    }
+
+    public interface ImageClickListener {
+
+        void onMediaClicked(ImageView imageView, UserView userView);
     }
 }

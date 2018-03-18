@@ -16,6 +16,7 @@
 
 package com.sergio.twitter.data.tweets;
 
+import com.sergio.twitter.data.BuildConfig;
 import com.sergio.twitter.data.tweets.mappers.TweetsListMapper;
 import com.sergio.twitter.data.tweets.network.SearchTweetsService;
 import com.sergio.twitter.domain.tweets.GetSearchTweetsRequest;
@@ -53,7 +54,8 @@ public class SearchTweetsRepositoryImpl implements SearchTweetsRepository {
 
     @Override
     public Single<SearchTweets> getNextTweetsList(GetSearchTweetsRequest request) {
-        return searchTweetsService.getNextTweetList(request.getNextResults())
+        return searchTweetsService.getNextTweetList(
+                BuildConfig.API_TWITTER + BuildConfig.API_TWITTER_SEARCH + request.getNextResults())
                 .map(tweetsListMapper::map)
                 .doOnError(Timber::e);
     }

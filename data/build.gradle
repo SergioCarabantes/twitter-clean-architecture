@@ -23,6 +23,7 @@ android {
         targetSdkVersion versions.targetSdk
 
         buildConfigField 'String', 'API_TWITTER', '"https://api.twitter.com/1.1/"'
+        buildConfigField 'String', 'API_TWITTER_SEARCH', '"search/tweets.json"'
         buildConfigField 'String', 'CONSUMER_KEY', '"AaGvDUHTeohv1VEfsQ4ClpRzG"'
         buildConfigField 'String', 'CONSUMER_SECRET', '"hDtegDJ1q6BwBSr8bgIVKAjnn6z1ihkp23DEdlRs4Js0qfJEwD"'
     }

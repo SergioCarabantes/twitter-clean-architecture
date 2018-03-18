@@ -16,15 +16,16 @@
 
 package com.sergio.twitter.data.tweets.network;
 
+import com.sergio.twitter.data.BuildConfig;
 import com.sergio.twitter.data.tweets.model.SearchTweetsEntity;
 import io.reactivex.Single;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 public interface SearchTweetsService {
 
-    @GET("/1.1/search/tweets.json")
+    @GET(BuildConfig.API_TWITTER_SEARCH)
     Single<SearchTweetsEntity> getTweetList(@Query("q") String queries,
                                             @Query("result_type") String resultType,
                                             @Query("max_id") String maxId,
@@ -32,7 +33,7 @@ public interface SearchTweetsService {
                                             @Query("tweet_mode") String mode,
                                             @Query("include_entities") boolean includeEntities);
 
-    @GET("/1.1/search/tweets.json{next_results}")
-    Single<SearchTweetsEntity> getNextTweetList(@Path(value = "next_results", encoded = false) String nextResults);
+    @GET
+    Single<SearchTweetsEntity> getNextTweetList(@Url String nextResults);
 
 }

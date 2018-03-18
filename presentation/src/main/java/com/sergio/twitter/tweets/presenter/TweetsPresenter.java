@@ -60,6 +60,7 @@ public class TweetsPresenter extends BasePresenter {
 
     @Override
     public void resume() {
+        view.showLoading();
         loadData();
     }
 

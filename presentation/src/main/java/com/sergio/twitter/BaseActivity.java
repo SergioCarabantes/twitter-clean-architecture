@@ -56,8 +56,8 @@ public abstract class BaseActivity extends AppCompatActivity  {
     protected void configureToolbar() {
         if (toolbar != null) {
             toolbar.setNavigationIcon(R.drawable.ic_action_arrow_back);
-            toolbar.setNavigationOnClickListener(v -> onBackPressed());
             setSupportActionBar(toolbar);
+            toolbar.setNavigationOnClickListener(v -> onBackPressed());
         }
     }
 

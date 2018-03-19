@@ -41,4 +41,11 @@ ext.versions = [
         autoValueVersion            : '1.5',
         autoValueParcel             : '0.2.5',
         autoValueGson               : '0.6.0',
+
+        //Test
+        jUnit                       : '4.12',
+        jUnitParams                 : '1.0.5',
+        assertjJava8                : '3.6.0',
+        mockito                     : '2.13.0'
+
 ]

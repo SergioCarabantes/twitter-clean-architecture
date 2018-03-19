@@ -42,4 +42,10 @@ ext.projectDependencies = [
         glide:                      "com.github.bumptech.glide:glide:$versions.glide",
         glideProcessor:             "com.github.bumptech.glide:compiler:$versions.glide",
         nullabilityAnnotations:     "com.google.code.findbugs:jsr305:$versions.nullabilityAnnotations",
+
+        //test
+        jUnit:                      "junit:junit:$versions.jUnit",
+        jUnitParams:                "pl.pragmatists:JUnitParams:$versions.jUnitParams",
+        assertJJava8:               "org.assertj:assertj-core:$versions.assertjJava8",
+        mockito:                    "org.mockito:mockito-core:$versions.mockito",
 ]

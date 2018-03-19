@@ -21,7 +21,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.RequiresApi;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,7 +46,6 @@ public class TweetDetailActivity extends BaseActivity implements ImageLoaderList
     public static String EXTRA_SCREEN_NAME = "EXTRA_SCREEN_NAME";
     public static String EXTRA_PROFILE_PIC = "EXTRA_PROFILE_PIC";
 
-    @BindView(R.id.container) ConstraintLayout container;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.image_view_profile_pic) ImageView profilePicImageView;
     @BindView(R.id.text_view_screen_name) TextView screenNameTextView;
@@ -81,6 +79,10 @@ public class TweetDetailActivity extends BaseActivity implements ImageLoaderList
         adapter.setContent(urlList);
         imageLoader.loadImageCircular(profilePic, profilePicImageView);
         screenNameTextView.setText(String.format("@%s", screenName));
+
+        if (urlList.size() > 1 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setSharedElementReturnTransition(null);
+        }
     }
 
     @Override

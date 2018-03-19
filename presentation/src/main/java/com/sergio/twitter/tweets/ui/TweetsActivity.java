@@ -37,6 +37,7 @@ import com.sergio.twitter.domain.tweets.model.Media;
 import com.sergio.twitter.tweetdetails.TweetDetailActivity;
 import com.sergio.twitter.tweets.presenter.TweetsPresenter;
 import com.sergio.twitter.tweets.view.TweetsView;
+import timber.log.Timber;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -53,6 +54,8 @@ public class TweetsActivity extends BaseActivity implements TweetsView, ImageCli
     @Inject TweetsGridAdapter adapter;
 
     private GridLayoutManager gridLayoutManager;
+    private int previousTotal = 0;
+    private boolean isStillLoading = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +104,7 @@ public class TweetsActivity extends BaseActivity implements TweetsView, ImageCli
 
     @Override
     public void addContent(List<UserData> content) {
+        previousTotal = 0;
         adapter.addContent(content);
     }
 
@@ -110,9 +114,6 @@ public class TweetsActivity extends BaseActivity implements TweetsView, ImageCli
     }
 
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
-
-        private int previousTotal = 0;
-        private boolean isStillLoading = true;
 
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -132,7 +133,8 @@ public class TweetsActivity extends BaseActivity implements TweetsView, ImageCli
                     previousTotal = totalItemCount;
                 }
             }
-            int visibleThreshold = 2;
+
+            int visibleThreshold = 3;
             if (!isStillLoading && (totalItemCount - visibleItemCount)
                     <= (firstVisibleItem + visibleThreshold)) {
                 presenter.onScrollFinish();

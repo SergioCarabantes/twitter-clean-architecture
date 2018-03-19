@@ -77,4 +77,10 @@ dependencies {
     implementation applicationDependencies.glide
     annotationProcessor applicationDependencies.glideProcessor
     implementation applicationDependencies.nullabilityAnnotations
+
+    //test
+    testImplementation applicationDependencies.jUnit
+    testImplementation applicationDependencies.jUnitParams
+    testImplementation applicationDependencies.mockito
+    testImplementation applicationDependencies.assertJJava8
 }

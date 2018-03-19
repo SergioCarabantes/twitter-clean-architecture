@@ -53,7 +53,6 @@ public class TweetsGridAdapter extends RecyclerView.Adapter<TweetsViewHolder> {
 
     @Override
     public int getItemCount() {
-        Timber.i("SIZE: " + userDataList.size());
         return userDataList.size();
     }
 

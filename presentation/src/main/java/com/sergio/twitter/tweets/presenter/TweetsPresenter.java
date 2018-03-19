@@ -16,6 +16,7 @@
 
 package com.sergio.twitter.tweets.presenter;
 
+import android.support.annotation.VisibleForTesting;
 import com.sergio.twitter.BasePresenter;
 import com.sergio.twitter.common.UserData;
 import com.sergio.twitter.data.preferences.PreferenceRepositoryImpl;
@@ -42,7 +43,7 @@ public class TweetsPresenter extends BasePresenter {
     private GetAuthenticationInteractor getAuthenticationInteractor;
     private PreferenceRepositoryImpl preferenceRepository;
     private TweetsView view;
-    private String maxId;
+    private String nextResults;
     private boolean newQuery;
 
     @Inject
@@ -88,9 +89,8 @@ public class TweetsPresenter extends BasePresenter {
 
     private void loadTweets() {
         GetSearchTweetsRequest request = new GetSearchTweetsRequest();
-        if (maxId != null && !newQuery) {
-            //request.setMaxId(maxId);
-            request.setNextResults(maxId);
+        if (nextResults != null && !newQuery) {
+            request.setNextResults(nextResults);
         } else {
             request.setQueries(query + " filter:images");
             request.setCount("50");
@@ -102,11 +102,12 @@ public class TweetsPresenter extends BasePresenter {
         registerDisposable(getSearchTweetsInteractor.execute(request, new GetSearchTweetsOutput() {
             @Override
             public void onSearchTweetsFetched(SearchTweets searchTweets) {
-                maxId = searchTweets.getSearchMetadata().getNextResults();
+                nextResults = searchTweets.getSearchMetadata().getNextResults();
                 view.hideLoading();
                 List<UserData> content = getUser(searchTweets);
                 if (newQuery) {
                     view.setContent(content);
+                    newQuery = false;
                 } else {
                     view.addContent(content);
                 }
@@ -163,9 +164,14 @@ public class TweetsPresenter extends BasePresenter {
     }
 
     public void onQueryTextSubmit(String query) {
-        view.showLoading();
         this.query = query;
+        view.showLoading();
         newQuery = true;
         loadData();
+    }
+
+    @VisibleForTesting
+    public void setNewQuery(boolean newquery) {
+        this.newQuery = newquery;
     }
 }

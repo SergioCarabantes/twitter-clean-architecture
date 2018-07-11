@@ -83,4 +83,10 @@ dependencies {
     testImplementation applicationDependencies.jUnitParams
     testImplementation applicationDependencies.mockito
     testImplementation applicationDependencies.assertJJava8
+    androidTestCompile applicationDependencies.espressoCore
+    androidTestCompile applicationDependencies.testRunner
+    androidTestCompile applicationDependencies.espressoContrib
+    androidTestCompile applicationDependencies.espressoIntents
+    androidTestCompile applicationDependencies.espressoRules
+    compile applicationDependencies.idlingResource
 }

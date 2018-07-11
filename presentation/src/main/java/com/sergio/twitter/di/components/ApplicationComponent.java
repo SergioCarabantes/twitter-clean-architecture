@@ -22,9 +22,7 @@ import com.sergio.twitter.di.modules.ApplicationModule;
 import com.sergio.twitter.di.modules.NetworkModule;
 import com.sergio.twitter.di.modules.RepositoryModule;
 import com.sergio.twitter.di.modules.ServicesModule;
-import com.sergio.twitter.domain.tweets.SearchTweetsRepository;
 import com.sergio.twitter.tweetdetails.TweetDetailActivity;
-import com.sergio.twitter.tweets.ui.ImageLoader;
 import com.sergio.twitter.tweets.ui.TweetsActivity;
 import dagger.Component;
 

@@ -46,6 +46,9 @@ ext.versions = [
         jUnit                       : '4.12',
         jUnitParams                 : '1.0.5',
         assertjJava8                : '3.6.0',
-        mockito                     : '2.13.0'
+        mockito                     : '2.13.0',
+        espresso                    : '3.0.1',
+        testRunner                  : '1.0.1',
+        espressoTestRules           : '0.5',
 
 ]

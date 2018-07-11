@@ -48,4 +48,10 @@ ext.projectDependencies = [
         jUnitParams:                "pl.pragmatists:JUnitParams:$versions.jUnitParams",
         assertJJava8:               "org.assertj:assertj-core:$versions.assertjJava8",
         mockito:                    "org.mockito:mockito-core:$versions.mockito",
+        espressoCore:               "com.android.support.test.espresso:espresso-core:$versions.espresso",
+        testRunner:                 "com.android.support.test:runner:$versions.testRunner",
+        espressoContrib:            "com.android.support.test.espresso:espresso-contrib:$versions.espresso",
+        idlingResource:             "com.android.support.test.espresso:espresso-idling-resource:$versions.espresso",
+        espressoIntents:            "com.android.support.test.espresso:espresso-intents:$versions.espresso",
+        espressoRules:              "com.android.support.test:rules:$versions.espressoTestRules"
 ]
